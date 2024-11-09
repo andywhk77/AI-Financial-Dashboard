@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial AI WebApp</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Financial Dashboard with Generative AI</h1>
+    
+    <!-- Stock Price Section -->
+     <div>
+        <h2>Real-Time Stock Price</h2>
+        <input type="text" id="stock-symbol" placeholder="Enter Stock Symbol">
+        <button onclick="getStockPrice()">Get Price</button>
+        <p id="stock-price"></p>
+    </div>
+    
+    <!-- AI Text Generation Section -->
+     <div>
+        <h2>Generate AI Content</h2>
+        <textarea id="text-prompt" placeholder="Enter your prompt here"></textarea>
+        <button onclick="generateText()">Generate</button>
+        <p id="generated-text"></p>
+    </div>
+    
+    <script>
+        async function getStockPrice() {
+            const symbol = document.getElementById('stock-symbol').value;
+            const response = await fetch('/financial_data', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({symbol})
+            });
+            const data = await response.json();
+            document.getElementById('stock-price').textContent = `Price of ${data.symbol}: $${data.price}`;
+        }
+        
+        async function generateText() {
+            const prompt = document.getElementById('text-prompt').value;
+            const response = await fetch('/generate_text', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({prompt})
+            });
+            const data = await response.json();
+            document.getElementById('generated-text').textContent = data.generated_text;
+        }
+        </script>
+</body>
+</html>
