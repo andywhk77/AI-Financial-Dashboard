@@ -1,2 +1,2 @@
-# Configuration file for storing sensitive data
-OPENAI_API_KEY = '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'
+# config.py
+OPENAI_API_KEY = 'your-openai-api-key'
