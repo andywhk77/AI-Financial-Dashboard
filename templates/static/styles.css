@@ -1,26 +1,25 @@
 body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: #f0f2f5;
     color: #333;
 }
 
-h1 {
-    color: #007bff;
-}
-
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.container {
+    max-width: 800px;
 }
 
 button {
     width: 100%;
-}
-
-textarea {
-    resize: none;
+    border-radius: 20px;
 }
 
 canvas {
     max-width: 100%;
     height: 400px;
+}
+
+#generated-text {
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 10px;
 }
