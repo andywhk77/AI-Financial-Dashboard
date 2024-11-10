@@ -1,28 +1,24 @@
 from flask import Flask, render_template, request, jsonify
 import openai
 import yfinance as yf
+from config import OPENAI_API_KEY
 
-# Initialize Flask app
 app = Flask(__name__)
+openai.api_key = OPENAI_API_KEY
 
-# OpenAI API configuration
-openai.api_key = "YOUR_OPENAI_API_KEY"
-
-# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Route for financial data
 @app.route('/financial_data', methods=['POST'])
 def financial_data():
     stock_symbol = request.json.get('symbol', 'AAPL')
     stock = yf.Ticker(stock_symbol)
-    data = stock.history(period='1d')
-    price = data['Close'][0]
-    return jsonify({"symbol": stock_symbol, "price": price})
+    data = stock.history(period='1mo')
+    prices = data['Close'].tolist()
+    dates = data.index.strftime('%Y-%m-%d').tolist()
+    return jsonify({"symbol": stock_symbol, "prices": prices, "dates": dates})
 
-# Route for AI-generated content
 @app.route('/generate_text', methods=['POST'])
 def generate_text():
     prompt = request.json.get('prompt', '')
@@ -35,4 +31,4 @@ def generate_text():
     return jsonify({"generated_text": ai_text})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
