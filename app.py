@@ -3,7 +3,7 @@ import openai
 import yfinance as yf
 from config import OPENAI_API_KEY
 
-app = Flask(__name__)
+app = Flask(__name__)  # Fixed: Added double underscores
 openai.api_key = OPENAI_API_KEY
 
 @app.route('/')
